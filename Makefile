@@ -1,47 +1,45 @@
 .DEFAULT_GOAL := target
 
-LIBNAME := utils
+LIB_NAME := utils
 
-SRCDIR := src
-INCDIR := include
-BINDIR := bin
+SRC_DIR := src
+INC_DIR := include
+BIN_DIR := bin
 
-INSTALLINCDIR := /usr/local/include
-INSTALLLIBDIR := /usr/local/lib
+INSTALL_INC_DIR := /usr/local/include
+INSTALL_LIB_DIR := /usr/local/lib
 
-SOURCES := $(addprefix $(SRCDIR)/,*.cpp)
-OBJNAME := $(addsuffix $(addprefix $(LIBNAME),.so),lib)
-HEADERNAME := $(addprefix $(LIBNAME),.h)
+SOURCES := $(addprefix $(SRC_DIR)/,*.cpp)
+OBJ_NAME := $(addsuffix $(addprefix $(LIB_NAME),.so),lib)
+HEADER_NAME := $(addprefix $(LIB_NAME),.h)
 
-LIBOBJ := $(BINDIR)/$(OBJNAME)
-LIBINC := $(INCDIR)/$(HEADERNAME)
+TARGET_OBJ := $(BIN_DIR)/$(OBJ_NAME)
+TARGET_INC := $(INC_DIR)/$(HEADER_NAME)
 
-INCFLAGS := -I $(INCDIR)
-CXXVERFLAG := -std=c++17
-DBG :=
-CXXFLAGS := $(INCFLAGS) $(CXXVERFLAG)
+INC_FLAGS := -I $(INC_DIR)
+CXX_VER_FLAG := -std=c++17
+DBG_FLAG :=
+CXXFLAGS := $(INC_FLAGS) $(CXX_VER_FLAG)
 
 .PHONY: all target clean install uninstall
 
 all: target install
 
-target: $(BINDIR) $(LIBOBJ)
+target: $(TARGET_OBJ)
 
-$(LIBOBJ): $(BINDIR)/%.so: $(SOURCES)
-	$(CXX) $(CXXFLAGS) -shared -o $@ -fPIC $(DBG) $^
-
-$(BINDIR):
-	mkdir -p $(BINDIR)
+$(TARGET_OBJ): $(BIN_DIR)/%.so: $(SOURCES)
+	mkdir -p $(BIN_DIR)
+	$(CXX) $(CXXFLAGS) -shared -o $@ -fPIC $(DBG_FLAG) $^
 
 clean:
-	rm -rf $(BINDIR)
+	rm -rf $(BIN_DIR)
 
 install: target
-	sudo install -d $(INSTALLINCDIR)
-	sudo install -d $(INSTALLLIBDIR)
-	sudo install -m644 $(LIBINC) $(INSTALLINCDIR)
-	sudo install -m644 $(LIBOBJ) $(INSTALLLIBDIR)
+	sudo install -d $(INSTALL_INC_DIR)
+	sudo install -d $(INSTALL_LIB_DIR)
+	sudo install -m644 $(TARGET_INC) $(INSTALL_INC_DIR)
+	sudo install -m644 $(TARGET_OBJ) $(INSTALL_LIB_DIR)
 
 uninstall:
-	sudo $(RM) $(INSTALLINCDIR)/$(HEADERNAME)
-	sudo $(RM) $(INSTALLLIBDIR)/$(OBJNAME)
+	sudo $(RM) $(INSTALL_INC_DIR)/$(HEADER_NAME)
+	sudo $(RM) $(INSTALL_LIB_DIR)/$(OBJ_NAME)
