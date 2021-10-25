@@ -46,9 +46,11 @@ install: target
 	sudo install -d $(INSTALL_INC_DIR)
 	sudo install -m644 $(TARGET_OBJ) $(INSTALL_LIB_DIR)
 	sudo install -m644 $(TARGET_INCS) $(INSTALL_INC_DIR)
+	sudo ldconfig
 
 uninstall:
 	sudo $(RM) $(INSTALL_LIB_DIR)/$(OBJ_NAME)
 	sudo $(RM) -r $(INSTALL_INC_DIR)
+	sudo ldconfig
 
 reinstall: uninstall install
