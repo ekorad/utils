@@ -16,7 +16,7 @@ HEADER_NAME := $(addprefix $(LIB_NAME),.h)
 TARGET_OBJ := $(BIN_DIR)/$(OBJ_NAME)
 TARGET_INC := $(INC_DIR)/$(HEADER_NAME)
 
-INC_FLAGS := -I $(INC_DIR)
+INC_FLAGS := $(addsuffix $(INC_DIR),-I)
 CXX_VER_FLAG := -std=c++17
 DBG_FLAG :=
 CXXFLAGS := $(INC_FLAGS) $(CXX_VER_FLAG)
