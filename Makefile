@@ -36,7 +36,7 @@ target: $(TARGET_OBJ)
 
 $(TARGET_OBJ): $(BIN_DIR)/%.so: $(SOURCES)
 	mkdir -p $(BIN_DIR)
-	$(CXX) $(CXXFLAGS) $^ -shared -o $@
+	$(CXX) $(CXXFLAGS) $^ -o $@
 
 clean:
 	rm -rf $(BIN_DIR)
