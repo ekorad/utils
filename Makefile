@@ -49,7 +49,6 @@ install: target
 
 uninstall:
 	sudo $(RM) $(INSTALL_LIB_DIR)/$(OBJ_NAME)
-	sudo $(RM) $(INSTALL_INC_DIR)/*.h
-	sudo rmdir $(INSTALL_INC_DIR)
+	sudo $(RM) -r $(INSTALL_INC_DIR)
 
 reinstall: uninstall install
